@@ -68,4 +68,10 @@ npm run build
 - 字段、状态、动作与流转目标集中在 `frontend/src/data/modules.ts`；示例数据在
   `frontend/src/data/seed.ts`。
 - 状态流转只允许在 `local-service.ts` 里改，页面组件不做业务判断。
+- 应急保障的处置书签走 `frontend/src/api/emergency-service.ts`：按应急编号打包现场文件生成
+  可下载书签，同一事件只留一个版本；装载失败记断点、可续做；应急状态与现场确认冲突时以现场
+  确认为准；未解除的书签不会展示成已完成。书签持久化在
+  `airport-ground-handling:emergency-bookmarks`（`frontend/src/data/bookmarks.ts`），旧版
+  书签读取时自动补齐结构。运营概览页保留书签对照标记。
+- 书签核心逻辑有脱机验证脚本：`cd frontend && npm run verify`（打包/断点续做/去重/兼容）。
 - 想回到初始数据：清掉浏览器里 `airport-ground-handling:entries` 这一项，或调用 `resetModule(模块)`。
